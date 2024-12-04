@@ -3,6 +3,7 @@ Here are my soltions for the [Advent of Code](https://adventofcode.com/) solutio
 
 ## Years
 
-* 2024: [Link to folder]
+* 2024: 
     - First one I've ever done! We're in the middle of it right now so we'll see how I go. 
-    - Done in C
+    - I'm currently in finals week in university, so it might be a couple weeks before I can get started.
+    - Solutions will be programmed in C
