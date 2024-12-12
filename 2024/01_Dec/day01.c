@@ -79,6 +79,17 @@ int main(int argc, char* argv[]){
     exit(EXIT_SUCCESS);
 }
 
+
+/* insert_sequential()
+ *   Insert an integer value into an array sequentially
+ * Return: 
+ *   n/a
+ * Parameters: 
+ *   int* arr: The array to insert into
+ *   int val: The signed integer value to insert
+ *   int size: The size of the array
+ *   int num_sorted: The number of integers in the array that are already sorted
+ */
 void insert_sequential(int* arr, int val, int size, int num_sorted){    
     /* Find the location (cur_pos) to insert new value */
     int cur_pos;
