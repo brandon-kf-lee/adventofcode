@@ -1,5 +1,5 @@
 /* Advent of Code
- * Solution for Day 1 Part 1: Historian Hysteria
+ * Solution for Day 1: Historian Hysteria
  * Brandon Lee
  * brandon.kf.lee@gmail.com
  */ 
