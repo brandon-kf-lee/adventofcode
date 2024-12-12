@@ -3,7 +3,7 @@
 
 ### Notes:
 * Time complexity:
-    * O(n^2), large while loop to read each line/reporthttps://cplusplus.com/reference/cstring/strtok/, nested while loop to compare each level with the next.
+    * O(n^2), large while loop to read each line/report, nested while loop to compare each level with the next.
 
 ### References:
 * Referenced my day 1 code for initial error checking.
