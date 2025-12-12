@@ -55,7 +55,13 @@ int main() {
         if(abs(range_n[1] - range_n[0]) < 1) max_run = 1;
 
         // Working on the assumption that ranges will not cover 2 or more differences in number length
-        for(ranges_i = 0; ranges_i < max_run; ++ranges_i) {
+        ranges_i = 0;
+        for(int temp = 0; temp < max_run; ++temp) {
+            
+            if(temp == 1) {
+                range[0] = (range[0] * (int)pow(10, range_n[0]) / range[0]);
+                range_n[0]++;
+            }
 
             // Only generate patterns based on up to half the digits in the bounds. Any pattern larger than that repeated twice would not fit. 
             for(int possible_patterns = 0; possible_patterns < (range_n[ranges_i] / 2); ++possible_patterns) {
