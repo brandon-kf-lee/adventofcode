@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <math.h>
 
 int main(int argc, char* argv[]) {
     FILE* combo;
@@ -61,6 +60,7 @@ int main(int argc, char* argv[]) {
 
     }
     printf("Password: %d\n", answer);
+    fclose(combo);
 
     return 0;
 }
