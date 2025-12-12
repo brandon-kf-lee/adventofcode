@@ -46,6 +46,7 @@ int main(int argc, char* argv[]) {
     }
 
     printf("Password: %d\n", answer);
+    fclose(combo);
 
     return 0;
 }
