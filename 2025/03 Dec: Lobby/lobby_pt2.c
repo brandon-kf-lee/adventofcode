@@ -39,16 +39,16 @@ int main() {
         }
         else {            
 
+            // Loop through each battery in each bank to 
             for(int place = 0; place < BANK_SIZE; ++place) {
-                //printf("  evaluating place %d\n", place);
-                //printf("  %c < %c && (%d) >= (%d)\n", bank[place], jolt, MAX_BANK - battery, BANK_SIZE - place);
+
+                // If the current place's joltage is lower, replace it 
+                // but only if there are enough sequential joltages after it to fit the rest of the desired battery bank
                 if(bank[place] < jolt && (MAX_BANK - battery) >= (BANK_SIZE - place)) {
                     bank[place] = jolt;
-                    //printf("    clearing from index %d, %d bytes\n", place + 1, (BANK_SIZE - place));
-                    // Ensure the rest of the bank array is -1 to ensure valid comparisons after replacements
+                    
+                    // Ensure the rest of the bank array is 0 to ensure valid comparisons after replacements
                     memset(&bank[place + 1], 0, (BANK_SIZE - place));
-                    //printf("    %c placed in: %d\n", jolt, place);
-                    //printf("    string so far: %s\n", bank);
                     break;
                 }
             }
@@ -56,10 +56,6 @@ int main() {
             battery++;
         }
     }
-
-    // printf("%s\n", bank);
-    // memset(&bank[5], -1, sizeof(bank) - 5);
-    // printf("%s\n", bank);
 
     printf("Total Joltage: %lld\n", total_joltage);
     fclose(banks);
