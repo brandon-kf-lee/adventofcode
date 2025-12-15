@@ -10,7 +10,6 @@
 #define WIDTH 138                  // Width of a row of the diagram
 #define PADDED_WIDTH (WIDTH + 2)   // Width after padding the row with a '.' on both ends
 
-
 /* read_and_pad()
  *   Reads a line of WIDTH characters from diagram into row and pads the beginning and 
  *   end of the array with '.'  * Return: 
@@ -22,7 +21,7 @@
  */
 void read_and_pad(char row[PADDED_WIDTH], FILE* diagram) {
     fread(&row[1], sizeof(char), WIDTH, diagram);
-    fgetc(diagram);
+    fgetc(diagram); // Read and ignore the newline
     row[0] = row[PADDED_WIDTH - 1] = '.';
 }
 
@@ -36,7 +35,7 @@ int main() {
     int center = 1;             // The center of the rows array to analyze neighbors from
     int neighborhood = 3;       // How many neighborhoods (including center) to analyze
     char test_char;             // Test to see if EOF has been reached
-    int total_rolls = 0;        // Total number of rolls
+    int total_rolls = 0;        // Total number of rolls removed
     char rows[3][PADDED_WIDTH]; // Any 3 of the input rows at a time
     memset(rows, '0', sizeof(char) * neighborhood * PADDED_WIDTH);
 
@@ -46,43 +45,19 @@ int main() {
 
     while(1) {
         
-        // If end of file, add an impliciy row of '.' to the end
+        // If end of file, add an implicit row of '.'s to the end
         if((test_char = fgetc(diagram)) == EOF) {
-            //printf("\n\nLast row\n");
             memset(rows[2], '.', sizeof(char) * PADDED_WIDTH);
         }
         // Put back the read character and read in the next row
         else {
-            //printf("\n\nGrabbing 1 row\n");
             ungetc(test_char, diagram);
             read_and_pad(rows[2], diagram);
         }
         
-
-        // for(int i = 0; i < neighborhood; ++i) {
-        //     for (int j = 0; j < PADDED_WIDTH; ++j) {
-        //         printf("%c", rows[i][j]);
-        //     }
-        //     printf("\n");
-        // }
-        // printf("\n");
-
         // Evaluate each set of neighbors from the center
         for(int col = 1; col < WIDTH + 1; ++col) {
-            //printf("%c", rows[center][col]);
             if(rows[center][col] != '.') {
-                // printf("%c", rows[center - 1][col - 1]);
-                // printf("%c", rows[center - 1 ][col]);
-                // printf("%c\n", rows[center - 1][col + 1]);
-
-                // printf("%c", rows[center][col - 1]);
-                // printf("%c", rows[center][col]);
-                // printf("%c\n", rows[center][col + 1]);
-
-                // printf("%c", rows[center + 1][col - 1]);
-                // printf("%c", rows[center + 1][col]);
-                // printf("%c\n\n", rows[center + 1][col + 1]);
-
 
                 // Add 1 to rolls if one of the neighbors is a '@'
                 int rolls = (1 ? (rows[center - 1][col - 1] == '@') : 0) +  // Top left
