@@ -1,5 +1,5 @@
 /* Advent of Code
- * Solution for Day 4: Printing Department, Part 1
+ * Solution for Day 4: Printing Department, Part 2
  * Brandon Lee
  * brandon.kf.lee@gmail.com
  */ 
