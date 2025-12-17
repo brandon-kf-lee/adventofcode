@@ -25,11 +25,18 @@ range* create_range(long long lower, long long upper);
 // Insert range in order (based on lower bound)
 void insert_range(range** head, long long lower, long long upper);
 
+void deduplicate_range(range* step, range* current);
+
 // Find potential ID within range
 int find_id(range** head, long long id);
 
+long long range_total(range* head);
+
 // Insert a node at the beginning (head)
 void insert_head(range** head, long long lower, long long upper);
+
+// Delete a range node
+void free_range(range* node);
 
 // Print the list in forward direction
 void print_list(range* head);
