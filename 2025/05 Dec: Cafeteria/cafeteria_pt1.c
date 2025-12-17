@@ -19,11 +19,10 @@ int main() {
     char test_char;
     long long lower, upper, id;
     int total_fresh = 0;
-    Range* head = NULL;
+    range* head = NULL;
 
     // Build list of ranges
     while(1) {
-        
         // If a '\n' newline is detected, must be the end of the ranges section
         if((test_char = fgetc(inventory)) == '\n'){
             break;
@@ -32,13 +31,11 @@ int main() {
         
         fscanf(inventory, "%lld-%lld", &lower, &upper);
         fgetc(inventory); // Ignore the newline at the end of each range 
-        insertRange(&head, lower, upper);
+        insert_range(&head, lower, upper);
     }
 
-    printListForward(head);
-
+    // Evaluate IDs
     while(1) {
-        
         // If EOF is detected (or extraneous '\n'), must be the end of the item section
         if((test_char = fgetc(inventory)) == EOF || test_char == '\n'){
             break;
@@ -47,13 +44,11 @@ int main() {
         
         fscanf(inventory, "%lld", &id);
         fgetc(inventory); // Ignore the newline at the end of each id 
-        printf("%lld: ", id);
-
-        printf("%d \n", findID(&head, id));
-        total_fresh += findID(&head, id);
+        total_fresh += find_id(&head, id);
     }
    
     printf("Fresh ingredients: %d\n", total_fresh);
     fclose(inventory);
+    delete_list(head);
     return 0;
 }
