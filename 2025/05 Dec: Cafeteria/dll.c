@@ -52,45 +52,21 @@ void insertRange(Range** head, long long lower, long long upper) {
     }
     step->next = newRange;
 
-    // Not working code that tries to absorb any existing ranges that it cover
-    // Range* absorb[2] = {newRange, newRange->next};
-    // for(int i = 0; i < 2; ++i) {
-    //     if(absorb[i] != NULL && absorb[i]->lower >= step->lower && absorb[i]->lower <= step->upper && absorb[i]->upper >= step->upper) {
-    //         step->upper = absorb[i]->upper;
-
-    //         // Delete this node
-    //         if (absorb[i]->next != NULL) {
-    //             absorb[i]->next->prev = step;
-    //         }
-    //         if (absorb[i]->prev != NULL) {
-    //             absorb[i]->prev->next = absorb[i]->next;
-    //         }
-    //         free(absorb[i]);
-    //     }
-    // }
-
-
 }
 
 int findID(Range** head, long long id) {
-    
-    // check if DLL is empty
+    // Check if DLL is empty
     if (*head == NULL) {
         return 0;
     }
 
-    Range* temp = *head;
-    while (temp->next != NULL && (id < temp->lower || id > temp->upper)) {
-        temp = temp->next;
+    Range* step = *head;
+    while (step->next != NULL && (id < step->lower || id > step->upper)) {
+        step = step->next;
     }
 
-    if(temp->next == NULL) {
-        return 0;
-    }
-    else {
-        return 1;
-    }
-
+    // Return 0 if next node is null, otherwise, ID range found
+    return (!(step->next)? 0 : 1);
 }
 
 
