@@ -9,33 +9,6 @@
 #include <string.h>
 #include "./dll.h"
 
-/* read_range()
- *   Reads a line formatted %lld-%lld into lower and upper
- * Return:
- *   void
- * Parameters: 
- *   long long* lower: Item range lower bound
- *   long long* upper: Item range lower bound
- *   FILE* inventory:  The inventory sheet with proper AOC 2025 Day 5 input formatting
- */
-void read_range(long long* lower, long long* upper, FILE* inventory) {
-    fscanf(inventory, "%lld-%lld", lower, upper);
-    fgetc(inventory); // Ignore the newline at the end of each range 
-}
-
-/* read_id()
- *   Reads a line formatted %lld into id
- * Return:
- *   void
- * Parameters: 
- *   long long* id: Item id
- *   FILE* inventory:  The inventory sheet with proper AOC 2025 Day 5 input formatting
- */
-void read_id(long long* id, FILE* inventory) {
-    fscanf(inventory, "%lld", id);
-    fgetc(inventory); // Ignore the newline at the end of each id 
-}
-
 int main() {
     FILE* inventory;
     if((inventory = fopen("input.txt", "r")) == NULL) {
@@ -44,9 +17,8 @@ int main() {
     }
 
     char test_char;
-    long long lower, upper;
-    long long id;
-    int fresh = 0;
+    long long lower, upper, id;
+    int total_fresh = 0;
     Range* head = NULL;
 
     // Build list of ranges
@@ -58,10 +30,9 @@ int main() {
         }
         ungetc(test_char, inventory);
         
-        read_range(&lower, &upper, inventory);
+        fscanf(inventory, "%lld-%lld", &lower, &upper);
+        fgetc(inventory); // Ignore the newline at the end of each range 
         insertRange(&head, lower, upper);
-
-
     }
 
     printListForward(head);
@@ -74,14 +45,15 @@ int main() {
         }
         ungetc(test_char, inventory);
         
-        read_id(&id, inventory);
+        fscanf(inventory, "%lld", &id);
+        fgetc(inventory); // Ignore the newline at the end of each id 
         printf("%lld: ", id);
 
         printf("%d \n", findID(&head, id));
-        fresh += findID(&head, id);
+        total_fresh += findID(&head, id);
     }
    
-    printf("Fresh ingredients: %d\n", fresh);
+    printf("Fresh ingredients: %d\n", total_fresh);
     fclose(inventory);
     return 0;
 }
