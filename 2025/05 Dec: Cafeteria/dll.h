@@ -11,45 +11,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// defining a range node
-typedef struct Range {
-    struct Range* prev;
-    struct Range* next;
+// Range node definition
+typedef struct range {
+    struct range* prev;
+    struct range* next;
     long long lower;
     long long upper;
-} Range;
+} range;
 
-// TODO: replace all names with underscore case
+// Create a new range node with given values as data
+range* create_range(long long lower, long long upper);
 
-// Function to create a new node with given values as data
-Range* createRange(long long lower, long long upper);
+// Insert range in order (based on lower bound)
+void insert_range(range** head, long long lower, long long upper);
 
-void insertRange(Range** head, long long lower, long long upper);
+// Find potential ID within range
+int find_id(range** head, long long id);
 
-int findID(Range** head, long long id);
+// Insert a node at the beginning (head)
+void insert_head(range** head, long long lower, long long upper);
 
-// Function to insert a node at the beginning
-void insertAtBeginning(Range** head, long long lower, long long upper);
+// Print the list in forward direction
+void print_list(range* head);
 
-// Function to insert a node at the end
-void insertAtEnd(Range** head, long long lower, long long upper);
-
-// Function to insert a node at a specified position
-void insertAtPosition(Range** head, long long lower, long long upper, int position);
-
-// Function to delete a node from the beginning
-void deleteAtBeginning(Range** head);
-
-// Function to delete a node from the end
-void deleteAtEnd(Range** head);
-
-// Function to delete a node from a specified position
-void deleteAtPosition(Range** head, int position);
-
-// Function to print the list in forward direction
-void printListForward(Range* head);
-
-// Function to print the list in reverse direction
-void printListReverse(Range* head);
+// Free all dynamic memory allocated by list
+void delete_list(range* head);
 
 #endif //DLL_H

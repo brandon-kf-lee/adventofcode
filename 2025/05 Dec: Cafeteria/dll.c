@@ -7,9 +7,8 @@
 
 #include "./dll.h"
 
-Range* createRange(long long lower, long long upper)
-{
-    Range* newRange = (Range*)malloc(sizeof(Range));
+range* create_range(long long lower, long long upper) {
+    range* newRange = (range*)malloc(sizeof(range));
     newRange->lower = lower;
     newRange->upper = upper;
     newRange->next = NULL;
@@ -17,9 +16,9 @@ Range* createRange(long long lower, long long upper)
     return newRange;
 }
 
-void insertRange(Range** head, long long lower, long long upper) {
+void insert_range(range** head, long long lower, long long upper) {
     // creating new node
-    Range* newRange = createRange(lower, upper);
+    range* newRange = create_range(lower, upper);
 
     // check if DLL is empty
     if (*head == NULL) {
@@ -27,12 +26,12 @@ void insertRange(Range** head, long long lower, long long upper) {
         return;
     }
 
-    Range* step = *head;
+    range* step = *head;
 
     // If the new node's lower is smaller than the head's put the new node at the beginning
     if(step->lower >= newRange->lower){
         free(newRange);
-        insertAtBeginning(head, lower, upper);
+        insert_head(head, lower, upper);
         return;
     }
 
@@ -54,13 +53,13 @@ void insertRange(Range** head, long long lower, long long upper) {
 
 }
 
-int findID(Range** head, long long id) {
+int find_id(range** head, long long id) {
     // Check if DLL is empty
     if (*head == NULL) {
         return 0;
     }
 
-    Range* step = *head;
+    range* step = *head;
     while (step->next != NULL && (id < step->lower || id > step->upper)) {
         step = step->next;
     }
@@ -70,10 +69,9 @@ int findID(Range** head, long long id) {
 }
 
 
-void insertAtBeginning(Range** head, long long lower, long long upper)
-{
+void insert_head(range** head, long long lower, long long upper) {
     // creating new node
-    Range* newRange = createRange(lower, upper);
+    range* newRange = create_range(lower, upper);
 
     // check if DLL is empty
     if (*head == NULL) {
@@ -85,122 +83,8 @@ void insertAtBeginning(Range** head, long long lower, long long upper)
     *head = newRange;
 }
 
-void insertAtEnd(Range** head, long long lower, long long upper)
-{
-    // creating new node
-    Range* newRange = createRange(lower, upper);
-
-    // check if DLL is empty
-    if (*head == NULL) {
-        *head = newRange;
-        return;
-    }
-
-    Range* temp = *head;
-    while (temp->next != NULL) {
-        temp = temp->next;
-    }
-    temp->next = newRange;
-    newRange->prev = temp;
-}
-
-void insertAtPosition(Range** head, long long lower, long long upper, int position)
-{
-    if (position < 1) {
-        fprintf(stderr, "Position should be >= 1.\n");
-        return;
-    }
-
-    // if we are inserting at head
-    if (position == 1) {
-        insertAtBeginning(head, lower, upper);
-        return;
-    }
-    Range* newRange = createRange(lower, upper);
-    Range* temp = *head;
-    for (int i = 1; temp != NULL && i < position - 1; i++) {
-        temp = temp->next;
-    }
-    if (temp == NULL) {
-        printf(
-            "Position greater than the number of nodes.\n");
-        return;
-    }
-    newRange->next = temp->next;
-    newRange->prev = temp;
-    if (temp->next != NULL) {
-        temp->next->prev = newRange;
-    }
-    temp->next = newRange;
-}
-
-void deleteAtBeginning(Range** head)
-{
-    // checking if the DLL is empty
-    if (*head == NULL) {
-        printf("The list is already empty.\n");
-        return;
-    }
-    Range* temp = *head;
-    *head = (*head)->next;
-    if (*head != NULL) {
-        (*head)->prev = NULL;
-    }
-    free(temp);
-}
-
-void deleteAtEnd(Range** head)
-{
-    // checking if DLL is empty
-    if (*head == NULL) {
-        printf("The list is already empty.\n");
-        return;
-    }
-
-    Range* temp = *head;
-    if (temp->next == NULL) {
-        *head = NULL;
-        free(temp);
-        return;
-    }
-    while (temp->next != NULL) {
-        temp = temp->next;
-    }
-    temp->prev->next = NULL;
-    free(temp);
-}
-
-void deleteAtPosition(Range** head, int position)
-{
-    if (*head == NULL) {
-        printf("The list is already empty.\n");
-        return;
-    }
-    Range* temp = *head;
-    if (position == 1) {
-        deleteAtBeginning(head);
-        return;
-    }
-    for (int i = 1; temp != NULL && i < position; i++) {
-        temp = temp->next;
-    }
-    if (temp == NULL) {
-        printf("Position is greater than the number of "
-               "nodes.\n");
-        return;
-    }
-    if (temp->next != NULL) {
-        temp->next->prev = temp->prev;
-    }
-    if (temp->prev != NULL) {
-        temp->prev->next = temp->next;
-    }
-    free(temp);
-}
-
-void printListForward(Range* head)
-{
-    Range* temp = head;
+void print_list(range* head) {
+    range* temp = head;
     printf("Forward List:\n");
     while (temp != NULL) {
         printf("%lld-%lld\n", temp->lower, temp->upper);
@@ -209,22 +93,15 @@ void printListForward(Range* head)
     printf("\n");
 }
 
-void printListReverse(Range* head)
-{
-    Range* temp = head;
-    if (temp == NULL) {
-        printf("The list is empty.\n");
-        return;
-    }
-    // Move to the end of the list
-    while (temp->next != NULL) {
-        temp = temp->next;
-    }
-    // Traverse backwards
-    printf("Reverse List:\n");
-    while (temp != NULL) {
-        printf("%lld-%lld\n", temp->lower, temp->upper);
-        temp = temp->prev;
-    }
-    printf("\n");
+void delete_list(range* head) {
+    range* step = head;
+    range* next;
+
+    if(head == NULL) return;
+
+    do{
+        next = step->next;
+        free(step);
+        step = next;
+    } while(step != NULL);
 }
