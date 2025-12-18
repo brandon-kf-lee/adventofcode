@@ -22,28 +22,20 @@ int main() {
     range* head = NULL;
 
     // Build list of ranges
-    while(1) {
-        // If a '\n' newline is detected, must be the end of the ranges section
-        if((test_char = fgetc(inventory)) == '\n'){
-            break;
-        }
+    // If a '\n' newline is detected, must be the end of the ranges section
+    while((test_char = fgetc(inventory)) != '\n') {
         ungetc(test_char, inventory);
-        
         fscanf(inventory, "%lld-%lld", &lower, &upper);
-        fgetc(inventory); // Ignore the newline at the end of each range 
+        fgetc(inventory); // Ignore one newline at the end of each range 
         insert_range(&head, lower, upper);
     }
 
     // Evaluate IDs
-    while(1) {
-        // If EOF is detected (or extraneous '\n'), must be the end of the item section
-        if((test_char = fgetc(inventory)) == EOF || test_char == '\n'){
-            break;
-        }
+    // If EOF is detected (or extraneous '\n'), must be the end of the item section
+    while((test_char = fgetc(inventory)) != EOF && test_char != '\n') {
         ungetc(test_char, inventory);
-        
         fscanf(inventory, "%lld", &id);
-        fgetc(inventory); // Ignore the newline at the end of each id 
+        fgetc(inventory); // Ignore one newline at the end of each id 
         total_fresh += find_id(&head, id);
     }
    
