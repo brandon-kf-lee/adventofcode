@@ -36,9 +36,6 @@ int main() {
     // Scan 2 extra characters (newline & null terminator)
     while(fgets(line, (int)(line_len) + 2, diagram)) {
         line[strcspn(line, "\n")] = 0;
-        
-        printf("prev: '%s'\n", prev);
-        printf("line: '%s'\n", line);
 
         for(int i = 0; i < line_len; ++i) {
             // Analyzing the previous line
@@ -68,11 +65,6 @@ int main() {
                     break;
             }
         }
-
-        printf("\ndone: '%s'\n", prev);
-        printf("done: '%s'\n", line);
-        printf("\n\n");
-
         strncpy(prev, line, line_len);
     }
         
