@@ -1,0 +1,33 @@
+# Brandon's Advent of Code Solutions
+## 06 Dec 2025: [Laboratories](https://adventofcode.com/2025/day/7)
+
+### Notes:
+* Time Complexity: 
+    * Part 1 & 2:
+        * O(n * m). Read file one line (n) at a time, scan the line a character (m) at a time
+* Part 2:
+    * I'm quite proud of my implementation for Part 2, epecially since it doesn't involve brute-forcing every possible path a beam can take. I took inspiration from Pascal's Triangle in that each new layer of the diagram is found by adding what came before it. I store beams as numbers that represent the number of timelines which have that beam in that exact coordinate point, counting up and adding each time a beam is generated through splitting or converging with a previous beam.
+    
+    * The general algorithm goes as follows:
+        1. Save the previously analyzed line.
+        2. Each point in the next line follows what is above. 
+            * That is, if the point should follow a beam that came from 4 different worlds, the point should also be 4. (Same idea as the '.' in the diagram). 
+            * If the point above is a splitter, there is no world that could generate a beam there, so set it to 0.
+        3. If the left and/or right of a point is a splitter, add the beam numbers that is going into one/both splitter(s).
+            * A simple diagram:
+                ```
+                ....4....    ....4.... 
+                ....^.... -> ...4^4... 
+                .........    ...404...  
+                ```
+
+                ```
+                ...323...    ...323... 
+                ...^.^... -> ..3^8^3.. 
+                .........    ..30803.. 
+                ```
+        4. After analyzing all the lines, add up the number of timelines present at the very end.
+
+### References:
+* Part 2:
+    * My wonderful girlfriend who walked me through how to analyze the timeline split mathematically and helped me discover the connection to Pascal's Triangle. <3
