@@ -10,7 +10,7 @@
 
 int main() {
     FILE* diagram;
-    if((diagram = fopen("input.txt", "r+")) == NULL) {
+    if((diagram = fopen("input.txt", "r")) == NULL) {
         fprintf(stderr, "Input does not exist/cannot open! Insert an input file called input.txt in the same directory.\n");
         return 1;
     }
@@ -70,5 +70,7 @@ int main() {
         
     printf("Split beam #: %d\n", split_n);
     fclose(diagram);
+    free(prev);
+    free(line);
     return 0;
 }
