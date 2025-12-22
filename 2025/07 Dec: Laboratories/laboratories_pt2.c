@@ -1,5 +1,5 @@
 /* Advent of Code
- * Solution for Day 7: Laboratories, Part 1
+ * Solution for Day 7: Laboratories, Part 2
  * Brandon Lee
  * brandon.kf.lee@gmail.com
  */ 
@@ -8,12 +8,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-
-void print_line(long long* line, int line_len) {
-    for(int i = 0; i < line_len; ++i) {
-        printf("%lld", line[i]);
-    }
-}
 
 int main() {
     FILE* diagram;
@@ -43,11 +37,6 @@ int main() {
     // Scan 2 extra characters (newline & null terminator)
     while(fgets(curr, (int)(line_len) + 2, diagram)) {
 
-        printf("prev: '");
-        print_line(prev, line_len_pad);
-        printf("'\n");
-        printf("curr: '%s'\n", curr);
-
         int pad = 0;  // For padding, to set the index for accessing prev and line one after the start
         for(int i = 0; i < line_len; ++i) {
             pad = i + 1;
@@ -61,14 +50,6 @@ int main() {
             if(curr[i + 1] == '^') line[pad] += prev[pad + 1];
         }
 
-        printf("\n  done \n");
-        printf("prev: '");
-        print_line(prev, line_len_pad);
-        printf("'\n");
-        printf("line: '");
-        print_line(line, line_len_pad);
-        printf("\n\n\n");
-
         // Copy finished line into prev for next analysis
         memcpy(prev, line, sizeof(long long) * line_len_pad);
     }
@@ -77,8 +58,8 @@ int main() {
 
     printf("Timelines: %lld\n", timelines);
     fclose(diagram);
-    free(prev);
-    free(line);
     free(curr);
+    free(line);
+    free(prev);
     return 0;
 }
